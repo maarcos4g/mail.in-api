@@ -22,11 +22,12 @@ model Plan {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  fullName  String  @map("full_name")
-  firstName String  @map("first_name")
-  email     String  @unique
-  avatarUrl String? @map("avatar_url")
+  id          String  @id @default(uuid())
+  fullName    String  @map("full_name")
+  firstName   String  @map("first_name")
+  email       String  @unique
+  avatarUrl   String? @map("avatar_url")
+  isConfirmed Boolean @default(false) @map("is_confirmed")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

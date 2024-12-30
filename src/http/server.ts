@@ -16,6 +16,7 @@ import { env } from '@/env';
 import { getAllPlans } from './routes/get-all-plans';
 import { createUser } from './routes/create-user';
 import { sendAuthCode } from './routes/send-authentication-code';
+import { validateCode } from './routes/validate-code';
 
 const app = fastify()
 
@@ -30,6 +31,7 @@ app.register(jwt, {
 app.register(getAllPlans)
 app.register(createUser)
 app.register(sendAuthCode)
+app.register(validateCode)
 
 sentry.setupFastifyErrorHandler(app)
 
