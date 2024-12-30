@@ -21,6 +21,7 @@
     "@sentry/profiling-node": "^8.47.0",
     "dayjs": "^1.11.13",
     "fastify": "^5.2.0",
+    "fastify-plugin": "^5.0.1",
     "fastify-type-provider-zod": "^4.0.2",
     "zod": "^3.24.1"
   },
