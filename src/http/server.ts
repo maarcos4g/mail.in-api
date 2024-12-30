@@ -10,6 +10,7 @@ import {
 } from 'fastify-type-provider-zod'
 
 import * as sentry from '@sentry/node'
+import { errorHandler } from '@/error-handler';
 
 import { env } from '@/env';
 
@@ -37,6 +38,8 @@ sentry.setupFastifyErrorHandler(app)
 
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
+
+app.setErrorHandler(errorHandler)
 
 app.listen({
   port: 3333,
