@@ -10,8 +10,12 @@ import {
 } from 'fastify-type-provider-zod'
 
 import * as sentry from '@sentry/node'
-import { getAllPlans } from './routes/get-all-plans';
+
 import { env } from '@/env';
+
+import { getAllPlans } from './routes/get-all-plans';
+import { createUser } from './routes/create-user';
+import { sendAuthCode } from './routes/send-authentication-code';
 
 const app = fastify()
 
@@ -24,6 +28,8 @@ app.register(jwt, {
 })
 
 app.register(getAllPlans)
+app.register(createUser)
+app.register(sendAuthCode)
 
 sentry.setupFastifyErrorHandler(app)
 

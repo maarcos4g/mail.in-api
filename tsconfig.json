@@ -8,6 +8,9 @@
     ],
     "module": "node16",
     "target": "es2022",
+
+    "jsx": "react-jsx",
+
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
