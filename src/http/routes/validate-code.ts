@@ -6,6 +6,9 @@ import { z } from "zod";
 import { db } from "@/db/connection";
 import dayjs from "dayjs";
 
+import { ClientError } from "../_errors/client-error";
+import { UnauthorizedError } from "../_errors/unauthorized-error";
+
 export async function validateCode(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
@@ -25,13 +28,13 @@ export async function validateCode(app: FastifyInstance) {
         })
 
         if (!authCode) {
-          throw new Error('Invalid code.')
+          throw new ClientError('Invalid code.')
         }
 
         const diff = dayjs(new Date()).diff(authCode.expiredAt)
 
         if (diff > 10) {
-          throw new Error('This code has expired')
+          throw new ClientError('This code has expired')
         }
 
         const user = await db.user.findUnique({
@@ -39,7 +42,7 @@ export async function validateCode(app: FastifyInstance) {
         })
 
         if (!user) {
-          throw new Error('Unauthorized')
+          throw new UnauthorizedError('Unauthorized')
         }
 
         await db.user.update({

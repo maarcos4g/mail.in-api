@@ -11,6 +11,8 @@ import { brevo } from "@/mail/client";
 import { render } from "@react-email/render";
 import { SendAuthCodeTemplate } from "@/mail/template/send-authentication-code";
 
+import { ClientError } from "../_errors/client-error";
+
 export async function sendAuthCode(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
@@ -30,7 +32,7 @@ export async function sendAuthCode(app: FastifyInstance) {
         })
 
         if (!userFromEmail) {
-          throw new Error('User not found.')
+          throw new ClientError('User not found.')
         }
 
         const code = generateCode()
