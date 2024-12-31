@@ -19,6 +19,7 @@ import { createUser } from './routes/create-user';
 import { sendAuthCode } from './routes/send-authentication-code';
 import { validateCode } from './routes/validate-code';
 import { createTeam } from './routes/create-team';
+import { getProfile } from './routes/get-profile';
 
 const app = fastify()
 
@@ -35,6 +36,7 @@ app.register(createUser)
 app.register(sendAuthCode)
 app.register(validateCode)
 app.register(createTeam)
+app.register(getProfile)
 
 sentry.setupFastifyErrorHandler(app)
 
