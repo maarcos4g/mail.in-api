@@ -37,8 +37,7 @@ model User {
 
   authCodes AuthCode[]
 
-  team   Team?   @relation(fields: [teamId], references: [id])
-  teamId String?
+  teamMembership TeamMembership[]
 
   @@map("users")
 }
@@ -53,6 +52,8 @@ model AuthCode {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  @@map("auth_codes")
 }
 
 model Team {
@@ -62,8 +63,24 @@ model Team {
 
   ownerId String
 
-  members User[]
-
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  teamMembership TeamMembership[]
+
+  @@map("teams")
+}
+
+model TeamMembership {
+  id     String @id @default(uuid())
+  userId String
+  teamId String
+
+  user User @relation(fields: [userId], references: [id])
+  team Team @relation(fields: [teamId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([userId, teamId])
+  @@map("team_membership")
 }

@@ -29,18 +29,25 @@ export async function createTeam(app: FastifyInstance) {
 
         const slug = generateSlug(name).toLowerCase()
 
-        const team = await db.team.create({
-          data: {
-            name,
-            ownerId: userId,
-            slug,
-            members: {
-              connect: {
-                id: userId,
-              }
-            }
-          },
-        })
+        const team = await db.$transaction(async (prisma) => {
+          const createdTeam = await prisma.team.create({
+            data: {
+              name,
+              ownerId: userId,
+              slug,
+            },
+          });
+
+          await prisma.teamMembership.create({
+            data: {
+              userId,
+              teamId: createdTeam.id,
+            },
+          });
+
+          return createdTeam;
+        });
+
 
         return reply.status(201).send({ teamId: team.id })
       })
