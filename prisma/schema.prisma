@@ -88,6 +88,7 @@ model TeamMembership {
 
 model EmailList {
   id      String   @id @default(uuid())
+  name    String
   senders String[]
 
   ownerId String @map("owner_id")
