@@ -6,14 +6,14 @@ Stack: Node.js, Fastify, Prisma, Sentry, Brevo
 
 - [x] Criação de usuário
 - [x] Login de usuário
-- [x] Update perfil do usuário
-- [x] Criar, editar e deletar times
-- [x] Adicionar membros no time
+- [ ] Update perfil do usuário
+- [ ] Criar, editar e deletar times
+- [ ] Adicionar membros no time
 - [x] Criar, editar e deletar listas de e-mail
-- [x] Criar e-mail e solicitar envio
-- [x] Obter e-mails
-- [x] Obter listas de e-mail
-- [x] Obter atividades na plataforma
+- [ ] Criar e-mail e solicitar envio
+- [ ] Obter e-mails
+- [ ] Obter listas de e-mail
+- [ ] Obter atividades na plataforma
 
 ## Futuras ações
 - [x] 
