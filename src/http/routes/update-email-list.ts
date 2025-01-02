@@ -13,13 +13,12 @@ export async function updateEmailList(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
-    .put('/email-list/:id',
+    .put('/email-list/:emailListId',
       {
         schema: {
           body: z.object({
-            name: z.string().min(4),
-            senders: z.string().array(),
-            teamId: z.string().uuid()
+            name: z.string().min(4).optional(),
+            senders: z.string().array().optional(),
           }),
           params: z.object({
             emailListId: z.string().uuid()
@@ -45,7 +44,7 @@ export async function updateEmailList(app: FastifyInstance) {
 
         const { cannot } = await getUserPermissions(userId)
 
-        if (await cannot('update', 'EmailList', emailList.teamId)) {
+        if (await cannot('update', 'EmailList', emailList.teamId, emailList.id)) {
           throw new UnauthorizedError(
             `You're not allowed to update this email list.`
           )
@@ -59,6 +58,6 @@ export async function updateEmailList(app: FastifyInstance) {
           where: { id: emailListId }
         })
 
-        return reply.status(201).send()
+        return reply.status(204).send()
       })
 }
