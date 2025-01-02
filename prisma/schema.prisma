@@ -61,12 +61,13 @@ model Team {
   name String
   slug String @unique
 
-  ownerId String
+  ownerId String @map("owner_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   teamMembership TeamMembership[]
+  emailLists     EmailList[]
 
   @@map("teams")
 }
@@ -83,4 +84,16 @@ model TeamMembership {
 
   @@unique([userId, teamId])
   @@map("team_membership")
+}
+
+model EmailList {
+  id      String   @id @default(uuid())
+  senders String[]
+
+  ownerId String @map("owner_id")
+
+  team   Team   @relation(fields: [teamId], references: [id])
+  teamId String
+
+  @@map("email_list")
 }
