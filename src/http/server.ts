@@ -24,6 +24,7 @@ import { createEmailList } from './routes/create-email-list';
 import { updateEmailList } from './routes/update-email-list';
 import { deleteEmailList } from './routes/delete-email-list';
 import { updateTeam } from './routes/update-team';
+import { deleteTeam } from './routes/delete-team';
 
 const app = fastify()
 
@@ -45,6 +46,7 @@ app.register(createEmailList)
 app.register(updateEmailList)
 app.register(deleteEmailList)
 app.register(updateTeam)
+app.register(deleteTeam)
 
 sentry.setupFastifyErrorHandler(app)
 
