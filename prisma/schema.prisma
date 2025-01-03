@@ -68,6 +68,7 @@ model Team {
 
   teamMembership TeamMembership[]
   emailLists     EmailList[]
+  invites        Invite[]
 
   @@map("teams")
 }
@@ -76,6 +77,9 @@ model TeamMembership {
   id     String @id @default(uuid())
   userId String
   teamId String
+
+  hasInvite    Boolean? @default(false)
+  invitationId String?
 
   user User @relation(fields: [userId], references: [id])
   team Team @relation(fields: [teamId], references: [id])
@@ -97,4 +101,19 @@ model EmailList {
   teamId String
 
   @@map("email_list")
+}
+
+model Invite {
+  id         String  @id @default(cuid())
+  inviterId  String  @map("inviter_id")
+  guestId    String? @map("guest_id")
+  guestEmail String  @map("guest_email")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team   Team?   @relation(fields: [teamId], references: [id])
+  teamId String? @map("team_id")
+
+  @@map("invites")
 }

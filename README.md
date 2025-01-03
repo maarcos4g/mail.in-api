@@ -22,3 +22,4 @@ Stack: Node.js, Fastify, Prisma, Sentry, Brevo
 ## Importante
 - [x] Apenas os usuários que criaram o time podem deletar e editar.
 - [x] Apenas os usuários que criaram o time podem criar as listas de e-mail, mas quem criou a lista pode deletar e editar.
+- [x] Membros do time podem enviar convites, mas apenas a pessoa que criou o time pode remover e administrar os membros.
