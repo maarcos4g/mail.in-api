@@ -5,6 +5,7 @@ const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   JWT_SECRET: z.string(),
   BREVO_API_KEY: z.string(),
+  REDIRECT_URL: z.string().url()
 })
 
 export const env = envSchema.parse(process.env)

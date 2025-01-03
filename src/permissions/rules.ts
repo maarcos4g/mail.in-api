@@ -3,10 +3,16 @@ import { db } from "@/db/connection"
 export const rules = {
   create: {
     EmailList: async (userId: string, teamId: string) => {
-      const team = await db.team.findUnique({
-        where: { id: teamId }
+      const membership = await db.teamMembership.findUnique({
+        where: {
+          userId_teamId: {
+            userId,
+            teamId,
+          }
+        }
       })
-      return team?.ownerId === userId
+
+      return Boolean(membership)
     },
     Invite: async (userId: string, teamId: string, guestEmail: string) => {
       const membership = await db.teamMembership.findUnique({
