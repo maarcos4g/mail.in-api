@@ -20,7 +20,14 @@ export const rules = {
       })
 
       return team?.ownerId === userId || emailList?.ownerId === userId
+    },
+    Team: async (userId: string, teamId: string) => {
+      const team = await db.team.findUnique({
+        where: { id: teamId }
+      })
+      return team?.ownerId === userId
     }
+
   },
   delete: {
     EmailList: async (userId: string, teamId: string, emailListId: string) => {
