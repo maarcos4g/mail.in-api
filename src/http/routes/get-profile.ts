@@ -30,6 +30,7 @@ export async function getProfile(app: FastifyInstance) {
                     id: z.string().uuid(),
                     name: z.string(),
                     slug: z.string(),
+                    ownerId: z.string(),
                   }),
                 )
               })
@@ -60,6 +61,7 @@ export async function getProfile(app: FastifyInstance) {
           id: membership.team.id,
           name: membership.team.name,
           slug: membership.team.slug,
+          ownerId: membership.team.ownerId,
         }));
 
         return reply.status(200).send({
