@@ -2,7 +2,10 @@
   "name": "mail.in <api>",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/http/server.mjs",
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
     "dev": "tsx watch --env-file .env src/http/server.ts",
     "build": "tsup src --format esm",
