@@ -4,7 +4,6 @@ import { auth } from "../middlewares/auth";
 import z from "zod";
 import { db } from "@/db/connection";
 import { ClientError } from "../_errors/client-error";
-import { useImperativeHandle } from "react";
 
 export async function getProfile(app: FastifyInstance) {
   app
