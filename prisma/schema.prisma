@@ -117,5 +117,7 @@ model Invite {
   inviter   User?   @relation(fields: [inviterId], references: [id])
   inviterId String? @map("inviter_id")
 
+  hasAccepted Boolean @default(false) @map("has_accepted")
+
   @@map("invites")
 }
