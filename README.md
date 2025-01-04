@@ -1,4 +1,4 @@
-# upload.video
+# mail.in
 
 Stack: Node.js, Fastify, Prisma, Sentry, Brevo
 
