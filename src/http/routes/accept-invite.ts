@@ -49,6 +49,7 @@ export async function acceptInvite(app: FastifyInstance) {
             where: { id: inviteId },
             data: {
               guestId: userId,
+              hasAccepted: true,
             }
           })
 
