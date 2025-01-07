@@ -16,7 +16,7 @@ export async function validateCode(app: FastifyInstance) {
       {
         schema: {
           body: z.object({
-            code: z.string().max(4)
+            code: z.string().max(6)
           })
         }
       },
