@@ -30,6 +30,8 @@ import { getTeamForSlug } from './routes/get-team-for-slug';
 import { acceptInvite } from './routes/accept-invite';
 import { getAllEmailList } from './routes/get-all-email-lists';
 import { getInvitesForTeam } from './routes/get-invites-for-team';
+import { signInWithEmail } from './routes/sign-in-with-email';
+import { getAllMyInvitations } from './routes/get-all-my-invitations';
 
 const app = fastify()
 
@@ -57,6 +59,8 @@ app.register(getTeamForSlug)
 app.register(acceptInvite)
 app.register(getAllEmailList)
 app.register(getInvitesForTeam)
+app.register(signInWithEmail)
+app.register(getAllMyInvitations)
 
 sentry.setupFastifyErrorHandler(app)
 
