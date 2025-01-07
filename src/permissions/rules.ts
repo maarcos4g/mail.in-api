@@ -60,7 +60,7 @@ export const rules = {
       const team = await db.team.findUnique({
         where: { id: teamId }
       })
-      
+
       //verifica se o time existe e se o usuário é o 'owner' do time
       if (team?.ownerId !== userId) {
         return false
@@ -108,7 +108,7 @@ export const rules = {
       const team = await db.team.findUnique({
         where: { id: teamId }
       })
-      
+
       //verifica se o time existe e se o usuário é o 'owner' do time
       if (team?.ownerId !== userId) {
         return false
@@ -136,6 +136,17 @@ export const rules = {
       });
       return Boolean(membership);
     },
+    Invite: async (userId: string) => {
+      const user = await db.user.findUnique({
+        where: { id: userId }
+      })
+
+      if (!user) {
+        return false
+      }
+
+      return user.isConfirmed
+    }
   },
-  
+
 }
