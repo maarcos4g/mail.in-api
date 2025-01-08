@@ -13,7 +13,7 @@ export async function acceptInvite(app: FastifyInstance) {
       {
         schema: {
           body: z.object({
-            inviteId: z.string().uuid(),
+            inviteId: z.string().cuid(),
           }),
           response: {
             200: z.object({
