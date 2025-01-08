@@ -17,8 +17,13 @@ export async function getAllEmailList(app: FastifyInstance) {
           params: z.object({
             teamId: z.string().uuid(),
           }),
+          querystring: z.object({
+            pageIndex: z.string().nullish().default('0').transform(Number),
+            search: z.string().nullish(),
+          }),
           response: {
             200: z.object({
+              total: z.number(),
               emailLists: z.array(
                 z.object({
                   id: z.string().uuid(),
@@ -30,7 +35,13 @@ export async function getAllEmailList(app: FastifyInstance) {
                     name: z.string(),
                     ownerId: z.string().uuid(),
                     slug: z.string(),
-                  })
+                  }),
+                  createdAt: z.date(),
+                  updatedAt: z.date().nullable(),
+                  owner: z.object({
+                    firstName: z.string(),
+                    avatarUrl: z.string().url().nullable(),
+                  }).nullable()
                 })
               )
             })
@@ -40,6 +51,7 @@ export async function getAllEmailList(app: FastifyInstance) {
       async (request, reply) => {
         const { teamId } = request.params
         const userId = await request.getCurrentUserId()
+        const { pageIndex, search: searchQuery } = request.query
 
         const { cannot } = await getUserPermissions(userId)
 
@@ -55,16 +67,56 @@ export async function getAllEmailList(app: FastifyInstance) {
           throw new ClientError('Team not found')
         }
 
-        const emailLists = await db.emailList.findMany({
-          where: {
-            teamId,
-          },
-          include: {
-            team: true,
-          },
-        })
+        const [emailLists, count] = await Promise.all([
+          db.emailList.findMany({
+            where: !searchQuery ? {
+              teamId,
+            } : {
+              teamId,
+              name: {
+                contains: searchQuery,
+              }
+            },
+            include: {
+              team: true,
+            },
+            take: 6,
+            skip: pageIndex * 6,
+            orderBy: {
+              createdAt: 'desc',
+            },
+          }),
 
-        return reply.status(200).send({ emailLists })
+          db.emailList.count({
+            where: !searchQuery
+              ? { teamId }
+              : {
+                  teamId,
+                  name: {
+                    contains: searchQuery,
+                  },
+                },
+          })
+        ])
+
+        const emailListsWithOwners = await Promise.all(
+          emailLists.map(async (emailList) => {
+            const owner = await db.user.findUnique({
+              where: { id: emailList.ownerId },
+              select: {
+                firstName: true,
+                avatarUrl: true,
+              },
+            });
+
+            return {
+              ...emailList,
+              owner, // Adiciona o objeto owner aos resultados
+            };
+          })
+        );
+
+        return reply.status(200).send({ total: count, emailLists: emailListsWithOwners })
       }
     )
 }
