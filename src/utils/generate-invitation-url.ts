@@ -1,5 +1,5 @@
 import { env } from "@/env";
 
-export function generateInvitationUrl(slug: string): string {
-  return new URL(`/team/${slug}/invite`, env.REDIRECT_URL).toString()
+export function generateInvitationUrl(slug: string, inviteId: string): string {
+  return new URL(`/team/${encodeURIComponent(slug)}/invite/${inviteId}`, env.REDIRECT_URL).toString()
 }

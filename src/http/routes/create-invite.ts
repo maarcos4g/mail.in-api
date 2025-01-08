@@ -71,7 +71,7 @@ export async function createInvite(app: FastifyInstance) {
             subject: '[mail.in] Convite de colaboração',
             htmlContent: await render(SendInviteLinkTemplate({
               teamName: team.name,
-              inviteLink: generateInvitationUrl(team.slug),
+              inviteLink: generateInvitationUrl(team.slug, invite.id),
               inviterName: invite.inviter!.firstName,
             })),
             sender: { name: 'mail.in Admin', email: 'marcos.dev07@gmail.com' },
