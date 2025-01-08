@@ -33,7 +33,6 @@ export async function getTeamForSlug(app: FastifyInstance) {
       },
       async (request, reply) => {
         const { slug } = request.params
-        const userId = await request.getCurrentUserId()
 
         const team = await db.team.findUnique({
           where: { slug }
@@ -43,14 +42,6 @@ export async function getTeamForSlug(app: FastifyInstance) {
           throw new ClientError('Team not found.')
         }
 
-        const { can } = await getUserPermissions(userId)
-
-        if (await can('read', 'Team', team.id)) {
-          return reply.status(200).send({ team })
-        }
-
-        throw new UnauthorizedError(`
-          You're not allowed to view this team data.
-          `)
+        return reply.status(200).send({ team })
       })
 }
