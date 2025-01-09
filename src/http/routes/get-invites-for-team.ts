@@ -30,7 +30,7 @@ export async function getInvitesForTeam(app: FastifyInstance) {
                 ),
                 waiting: z.array(
                   z.object({
-                    invitationId: z.string().uuid(),
+                    invitationId: z.string().cuid(),
                     memberEmail: z.string(),
                   })
                 )
@@ -47,6 +47,9 @@ export async function getInvitesForTeam(app: FastifyInstance) {
           where: { slug: teamSlug },
           include: {
             teamMembership: {
+              where: {
+                hasInvite: true,
+              },
               include: {
                 user: true,
               }
