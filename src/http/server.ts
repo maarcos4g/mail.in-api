@@ -33,6 +33,7 @@ import { getInvitesForTeam } from './routes/get-invites-for-team';
 import { signInWithEmail } from './routes/sign-in-with-email';
 import { getAllMyInvitations } from './routes/get-all-my-invitations';
 import { revokeInvite } from './routes/revoke-invite';
+import { getTeamActivity } from './routes/get-team-activity';
 
 const app = fastify()
 
@@ -63,6 +64,7 @@ app.register(getInvitesForTeam)
 app.register(signInWithEmail)
 app.register(getAllMyInvitations)
 app.register(revokeInvite)
+app.register(getTeamActivity)
 
 sentry.setupFastifyErrorHandler(app)
 

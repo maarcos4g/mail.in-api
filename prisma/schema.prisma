@@ -69,6 +69,7 @@ model Team {
   teamMembership TeamMembership[]
   emailLists     EmailList[]
   invites        Invite[]
+  activities     Activity[]
 
   @@map("teams")
 }
@@ -123,4 +124,31 @@ model Invite {
   hasAccepted Boolean @default(false) @map("has_accepted")
 
   @@map("invites")
+}
+
+model Activity {
+  id String @id @default(cuid())
+
+  authorName String @map("author_name")
+  authorId   String @map("author_id")
+
+  type    ActivityType
+  subtype ActivitySubtype?
+
+  team   Team   @relation(fields: [teamId], references: [id])
+  teamId String @map("team_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("activities")
+}
+
+enum ActivityType {
+  MEMBERSHIP
+  CREATE
+}
+
+enum ActivitySubtype {
+  EMAILLIST
+  EMAIL
 }
