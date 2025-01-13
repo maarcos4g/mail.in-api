@@ -70,6 +70,15 @@ export async function acceptInvite(app: FastifyInstance) {
           }
         })
 
+        await db.activity.create({
+          data: {
+            authorId: guest?.id!,
+            authorName: guest?.firstName!,
+            type: 'MEMBERSHIP',
+            teamId: invite.teamId!,
+          }
+        })
+
         const inviterIsTeamOwner = invite.inviterId === invite.team?.ownerId ? true : false
 
         await brevo.sendTransacEmail({

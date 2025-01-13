@@ -49,6 +49,23 @@ export async function createEmailList(app: FastifyInstance) {
           }
         })
 
+        const author = await db.user.findUnique({
+          where: { id: userId },
+          select: {
+            firstName: true
+          }
+        })
+
+        await db.activity.create({
+          data: {
+            authorId: userId,
+            type: 'CREATE',
+            subtype: 'EMAILLIST',
+            authorName: author!.firstName,
+            teamId,
+          }
+        })
+
         return reply.status(201).send({ emailListId: emailList.id })
       })
 }
