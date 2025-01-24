@@ -8,12 +8,12 @@ Stack: Node.js, Fastify, Prisma, Sentry, Brevo
 - [x] Login de usuário
 - [ ] Update perfil do usuário
 - [ ] Criar, editar e deletar times
-- [ ] Adicionar membros no time
+- [x] Adicionar membros no time
 - [x] Criar, editar e deletar listas de e-mail
 - [ ] Criar e-mail e solicitar envio
 - [ ] Obter e-mails
-- [ ] Obter listas de e-mail
-- [ ] Obter atividades na plataforma
+- [x] Obter listas de e-mail
+- [x] Obter atividades na plataforma
 
 ## Futuras ações
 - [x] 

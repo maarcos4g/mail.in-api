@@ -146,6 +146,23 @@ export const rules = {
       }
 
       return user.isConfirmed
+    },
+    EmailList: async (userId: string, emailListId: string) => {
+      const emailList = await db.emailList.findUnique({
+        where: { id: emailListId }
+      })
+
+      if (!emailList) {
+        return false
+      }
+
+      const membership = await db.teamMembership.findUnique({
+        where: {
+          userId_teamId: { userId, teamId: emailList.teamId },
+        },
+      });
+
+      return Boolean(membership)
     }
   },
 
