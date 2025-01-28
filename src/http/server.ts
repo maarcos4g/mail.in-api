@@ -37,6 +37,7 @@ import { getTeamActivity } from './routes/get-team-activity';
 import { getEmailList } from './routes/get-email-list';
 import { createEmail } from './routes/create-email';
 import { getAllEmails } from './routes/get-all-emails';
+import { requestSendEmail } from './routes/request-send-email';
 
 const app = fastify()
 
@@ -71,6 +72,7 @@ app.register(getTeamActivity)
 app.register(getEmailList)
 app.register(createEmail)
 app.register(getAllEmails)
+app.register(requestSendEmail)
 
 sentry.setupFastifyErrorHandler(app)
 
@@ -83,7 +85,9 @@ app.listen({
   port: 3333,
   host: '0.0.0.0'
 })
-.then(() => console.log('🔥 HTTP Server Running...'))
+.then(async () => {
+  console.log('🔥 HTTP Server Running...')
+})
 .catch(error => {
   throw new Error('Error to init app', error)
 })
