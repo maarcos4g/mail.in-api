@@ -104,6 +104,8 @@ model EmailList {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
+  emails Email[]
+
   @@map("email_list")
 }
 
@@ -151,4 +153,27 @@ enum ActivityType {
 enum ActivitySubtype {
   EMAILLIST
   EMAIL
+}
+
+model Email {
+  id      String      @id @default(cuid())
+  title   String
+  subject String
+  content String
+  status  EmailStatus @default(DRAFT)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  sentAt    DateTime? @map("sent_at")
+
+  emailList   EmailList @relation(fields: [emailListId], references: [id])
+  emailListId String    @map("email_list")
+
+  @@map("emails")
+}
+
+enum EmailStatus {
+  DRAFT
+  QUEUE
+  SENT
 }
